@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Application Electron</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="card">
+        <label for="config_nb_parties">Nombre de parties : </label>
+        <input type="number" id="config_nb_parties" name="config_nb_parties" min="1" max="6" value="6" />    
+    </div>
+    <div class="card">
+        <label for="config_nb_joueurs">Nombre de joueurs par équipe : </label>
+        <input type="number" id="config_nb_joueurs" name="config_nb_joueurs" min="1" max="3" value="2" />
+    </div>
+
+
+    <!-- Formulaire d'ajout/modification -->
+    <div class="card">
+        <textarea id="personList" placeholder="Entrez une liste de personnes, une par ligne..."></textarea>
+    </div>        
+
+
+    <script src="../js/config-renderer.js"></script>
+    <script>
+        initConfigRenderer();
+    </script>
+</body>
+</html>

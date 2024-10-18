@@ -1,0 +1,182 @@
+/* Thème sombre - Couleurs principales */
+:root {
+  --bg-color: #121212; /* Fond principal */
+  --surface-color: #1E1E1E; /* Couleur des surfaces comme les cartes ou inputs */
+  --primary-color: #BB86FC; /* Couleur principale pour les accents */
+  --secondary-color: #03DAC6; /* Couleur secondaire pour les accents */
+  --text-color: #FFFFFF; /* Couleur du texte principal */
+  --text-secondary-color: #B3B3B3; /* Texte secondaire */
+  --border-color: #333333; /* Bordure subtile */
+  --error-color: #CF6679; /* Couleur pour les erreurs */
+}
+
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.config-container {
+    display: flex; /* Utilise flexbox pour les colonnes */
+    justify-content: space-between; /* Espace entre les colonnes */
+    padding: 10px; /* Espacement intérieur */
+}
+
+/* Style de base pour les cartes */
+.card {
+border: 1px solid var(--border-color);;
+border-radius: 8px;
+padding: 10px;
+margin: 10px;
+justify-content: space-between;
+align-items: center;
+}
+
+.card button {
+  margin-left: 5px;
+  margin-bottom: 5px;
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.card label {
+  color: #FFFFFF;
+}
+
+/* Inputs et Textarea */
+.card input, textarea {
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card-content {
+font-size: 16px;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajustement automatique */
+gap: 10px; /* Espacement entre les éléments */
+}
+
+.card-content div {
+    margin-bottom: 5px; /* Espacement entre les joueurs */
+}
+
+/* Cachez la case à cocher */
+.checkbox input[type="checkbox"] {
+display: none;
+}
+
+/* Stylisez le label pour ressembler à un bouton */
+.checkbox label {
+padding: 10px 20px;
+border: 2px solid var(--border-color);
+border-radius: 8px;
+background-color: var(--surface-color);
+color: var(--text-secondary-color);
+cursor: pointer;
+transition: all 0.3s;
+display: flex;
+height: 40px; /* Hauteur en pixels */
+}
+
+/* Style du label quand la case est cochée */
+.checkbox input[type="checkbox"]:checked + label {
+background-color: var(--primary-color);
+color: var(--text-color);
+}
+
+/* Effet de survol */
+.checkbox label:hover {
+background-color: var(--secondary-color);
+color: var(--text-color);
+}
+
+#personList {
+    width: 100%;  /* Largeur en pixels */
+    height: 500px; /* Hauteur en pixels */
+    font-size: 16px;  /* Taille de la police */
+    display: flex;
+}
+
+
+/* Conteneur principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Hauteur totale de la fenêtre */
+  padding-bottom: 60px; /* Hauteur du bandeau */
+}
+
+/* Partie déroulante */
+.content {
+  padding: 20px;
+  overflow-y: auto; /* Permet le défilement vertical */
+  flex-grow: 1; /* Prend tout l'espace disponible restant */
+}
+
+#content-players {
+  display: none;
+}
+
+#nb_select {/* Conteneur fixe */
+      position: fixed;
+      top: 50%; /* Centré verticalement */
+      left: auto;
+      right: 0;
+      border-radius: 10px 0 0 10px;
+      transform: translateY(-50%); /* Correction pour centrer */
+      background-color: var(--bg-color); /* Couleur de fond */
+      color: var(--text-secondary-color); /* Couleur du texte */
+      padding: 10px 20px;
+      writing-mode: vertical-rl; /* Orientation verticale du texte */
+      text-align: center; /* Centrage horizontal */
+      font-size: 16px; /* Taille du texte */
+      box-shadow: 2px 0 5px var(--border-color); /* Légère ombre */
+  
+}
+
+
+/* Styles pour le bandeau */
+.footer-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--bg-color); /* Couleur de fond du bandeau */
+  display: flex;
+  justify-content: space-around; /* Espacement égal entre les boutons */
+  align-items: center;
+  padding: 10px 0;
+  box-shadow: 0 -2px 5px var(--bg-color);
+  z-index: 1000; /* Assure que le bandeau est au-dessus d'autres éléments */
+}
+
+/* Styles pour les boutons */
+.footer-bar button {
+  background-color: transparent;
+  border: none;
+  color: var(--text-secondary-color); /* Couleur des icônes */
+  font-size: 24px; /* Taille des icônes */
+  cursor: pointer;
+}
+
+.footer-bar button:hover {
+  color: var(--secondary-color); /* Couleur au survol */
+}
+
+.footer-bar button:focus {
+  outline: none; /* Enlève la bordure au focus */
+}

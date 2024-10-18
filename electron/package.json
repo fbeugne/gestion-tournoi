@@ -1,0 +1,17 @@
+{
+  "name": "electron",
+  "version": "1.0.0",
+  "description": "Gestion d'un tournoi",
+  "main": "js/main.js",
+  "devDependencies": {
+    "electron": "^33.2.1"
+  },
+  "scripts": {
+    "start": "electron js/main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gestion-tournoi": "file:../gestion-tournoi"
+  }
+}

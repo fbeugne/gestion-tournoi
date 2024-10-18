@@ -1,0 +1,36 @@
+{
+  "name": "lancement-gestion-tournoi",
+  "version": "1.0.0",
+  "description": "Demarrage de la gestion de tournoi",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor-community/file-opener": "^6.0.1",
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/browser": "^6.0.4",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/filesystem": "^6.0.2",
+    "@capacitor/share": "^6.0.3",
+    "gestion-tournoi": "file:../gestion-tournoi",
+    "jspdf": "^2.5.2",
+    "os": "^0.1.2",
+    "os-browserify": "^0.3.0",
+    "path": "^0.12.7",
+    "path-browserify": "^1.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
+    "electron": "^33.1.0",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
+  }
+}

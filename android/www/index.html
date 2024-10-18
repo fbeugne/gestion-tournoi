@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Tournoi</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="content" id="content-config">
+      <div class="card">
+        <p>Nombre de parties</p>
+        <input type="number" id="config_nb_parties" name="config_nb_parties" min="1" max="6" value="6" />
+      </div>
+      <div class="card">
+        <p>Nombre de joueurs par équipe</p>
+        <input type="number" id="config_nb_joueurs" name="config_nb_joueurs" min="1" max="3" value="2" />
+      </div>
+
+
+      <!-- Formulaire d'ajout/modification -->
+      <div class="card">
+        <p>Liste des joueurs</p>
+        <textarea id="personList" placeholder="Entrez une liste de personnes, une par ligne..."></textarea>
+      </div>
+
+    </div>
+
+    <div class="content" id="content-players">
+      <div class="card">
+        <label id="nb_select"></label>
+        <div id="homePlayers" class="card-content"></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer-bar">
+    <button id="bouton_config">
+        <i class="fas fa-cog"></i>
+    </button>
+    <button id="bouton_select">
+        <i class="fas fa-check"></i>
+    </button>
+    <button id="bouton_generer">
+        <i class="fas fa-dice"></i>
+    </button>
+    <!--
+    <button id="bouton_resultat">
+        <i class="fas fa-pen"></i>
+    </button>
+    -->
+  </div>
+
+  <script type="module" src="js/webpack/bundle.js"></script>
+</body>
+
+</html>

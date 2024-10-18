@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.config-container {
+    display: flex; /* Utilise flexbox pour les colonnes */
+    justify-content: space-between; /* Espace entre les colonnes */
+    padding: 10px; /* Espacement intérieur */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre pour un effet de profondeur */
+}
+
+/* Style de base pour les cartes */
+.card {
+border: 1px solid #ddd;
+border-radius: 8px;
+padding: 10px;
+margin: 10px;
+box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+justify-content: space-between;
+align-items: center;
+}
+
+.card button {
+margin-left: 5px;
+margin-bottom: 5px;
+padding: 5px 10px;
+font-size: 14px;
+border-radius: 8px;
+width: 100%;
+}
+
+.card-content {
+font-size: 16px;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajustement automatique */
+gap: 10px; /* Espacement entre les éléments */
+}
+
+.card-content div {
+    margin-bottom: 5px; /* Espacement entre les joueurs */
+}
+
+
+/* Cachez la case à cocher */
+.checkbox input[type="checkbox"] {
+display:none;
+}
+  
+/* Stylisez le label pour ressembler à un bouton */
+.checkbox label {
+padding: 10px 20px;
+border: 2px solid #007bff;
+border-radius: 5px;
+background-color: #fff;
+color: #007bff;
+cursor: pointer;
+transition: all 0.3s;
+display: flex;
+height: 40px; /* Hauteur en pixels */
+}
+
+/* Style du label quand la case est cochée */
+.checkbox input[type="checkbox"]:checked + label {
+background-color: #007bff;
+color: #fff;
+}
+
+/* Effet de survol */
+.checkbox label:hover {
+background-color: #00fffb;
+color: #fff;
+}
+
+#personList {
+    width: 100%;  /* Largeur en pixels */
+    height: 500px; /* Hauteur en pixels */
+    font-size: 16px;  /* Taille de la police */
+    display: flex;
+}
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Conteneur principal */
+  .container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Hauteur totale de la fenêtre */
+}
+
+/* Partie fixe */
+.menu {
+  padding: 20px;
+  text-align: center;
+  flex-shrink: 0; /* Empêche cette section de se redimensionner */
+}
+
+/* Partie déroulante */
+.content {
+  padding: 20px;
+  overflow-y: auto; /* Permet le défilement vertical */
+  flex-grow: 1; /* Prend tout l'espace disponible restant */
+}
+
+#content-players {
+  display: none;
+}

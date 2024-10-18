@@ -1,0 +1,11 @@
+{
+  "appId": "com.gestiontournoi.app",
+  "appName": "app-gestion-tournoi",
+  "webDir": "www",
+  "plugins": {
+    "assets": {
+      "icon": "assets/icon.webp"
+    }
+  }
+}
+

@@ -1,0 +1,18 @@
+{
+  "name": "gestion-tournoi",
+  "version": "1.0.52",
+  "description": "Gestion d'un tournoi",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fabien BEUGNE",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/filesystem": "^6.0.2",
+    "@capacitor/share": "^6.0.3",
+    "jspdf-autotable": "^3.8.4",
+    "pdf-lib": "^1.17.1"
+  }
+}

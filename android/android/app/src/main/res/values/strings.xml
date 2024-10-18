@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">app-gestion-tournoi</string>
+    <string name="title_activity_main">app-gestion-tournoi</string>
+    <string name="package_name">com.gestiontournoi.app</string>
+    <string name="custom_url_scheme">com.gestiontournoi.app</string>
+</resources>
