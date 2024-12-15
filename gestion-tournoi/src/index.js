@@ -9,6 +9,8 @@ const {setNbPlayersPerTeam} = require('./config-tournoi');
 const {setPlayerSelection} = require('./config-tournoi');
 const {getSelectedPlayers} = require('./config-tournoi');
 const {effectuerTirage} = require('./tirage');
+const {getTirage} = require('./tirage');
+const {loadTirage} = require('./tirage');
 
 
 module.exports = {
@@ -22,5 +24,7 @@ module.exports = {
     setNbPlayersPerTeam,
     setPlayerSelection,
     getSelectedPlayers,
-    effectuerTirage
+    effectuerTirage,
+    getTirage,
+    loadTirage
 }

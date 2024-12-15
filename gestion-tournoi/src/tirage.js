@@ -293,6 +293,25 @@ function effectuerTirage(pdfFilePath) {
 }
 
 
+function loadTirage (jsonData) {
+    try {
+        parties = JSON.parse(jsonData);
+    } catch (error) {
+        // Si le fichier n'existe pas, retourner des paramètres par défaut
+        parties = []; // dictionnaire {id, pairs, resultat}
+        
+    }
+}
+
+function getTirage()
+{
+    jsonData = JSON.stringify(parties);
+    return jsonData;
+}
+
+
 module.exports = {
-    effectuerTirage
+    effectuerTirage,
+    getTirage,
+    loadTirage
 }

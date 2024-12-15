@@ -9,20 +9,23 @@ const { getSelectedPlayers } = require('./config-tournoi.js');
 function printPlayer(doc) {
 
     // Définir les en-têtes du tableau
-    const headers = ["N°", "Joueur", "", "Joueur", "N°"];
+    const headers = ["N°", "Joueur", "", "N°", "Joueur"];
 
-    // Définir les données du tableau (5 lignes d'exemple)
     const data = [];
     const selectedPlayersPerIdMatch = getSelectedPlayers().sort((a, b) => a.id_match - b.id_match);
-    selectedPlayersPerIdMatch.forEach(selectedPlayer => {
+
+    /* 1ere moitier de la liste */ 
+    const selectedPlayers1stCloumn = selectedPlayersPerIdMatch.slice(0, (selectedPlayersPerIdMatch.length + 1) / 2);
+    selectedPlayers1stCloumn.forEach(selectedPlayer => {
         data.push([selectedPlayer.id_match, selectedPlayer.name, "", "", ""]);
     });
 
-    const selectedPlayersPerName = getSelectedPlayers();
+    /* 2eme moitier de la liste */
+    const selectedPlayers2ndCloumn = selectedPlayersPerIdMatch.slice((selectedPlayersPerIdMatch.length + 1) / 2, selectedPlayersPerIdMatch.length);
     let indexData = 0;
-    selectedPlayersPerName.forEach(selectedPlayer => {
-        data[indexData][3] = selectedPlayer.name;
-        data[indexData][4] = selectedPlayer.id_match;
+    selectedPlayers2ndCloumn.forEach(selectedPlayer => {
+        data[indexData][3] = selectedPlayer.id_match;
+        data[indexData][4] = selectedPlayer.name;
         indexData++;
     });
 
@@ -78,7 +81,7 @@ function printScore(doc, parties) {
         head: [headers],
         body: data,
         theme: 'grid',
-        styles: { fontSize: 11, minCellHeight: 12, halign: 'center', valign: 'middle'},
+        styles: { fontSize: 11, minCellHeight: 12, halign: 'center', valign: 'middle'}
     });
 }
 
@@ -103,6 +106,12 @@ function printPartie(doc, partie){
             body: data,
             theme: 'grid',
             styles: { fontSize: 16, minCellHeight: 12, halign: 'center', valign: 'middle' },
+            didParseCell : (data) => {
+                if ((data.section === 'body') && (data.column.index === 0)) {
+                    data.cell.styles.fontStyle = 'bold';
+                    data.cell.styles.fillColor = 230;
+                }
+            },
         });
 }
 
@@ -117,7 +126,7 @@ const saveDoc = async(doc, filePath) => {
         if (isElectron) {
             // Comportement Electron (Node.js)
             doc.save(filePath); // Sauvegarde directement dans le système de fichiers
-            console.log(`PDF saved at: ${filePath}`);
+            console.log(`PDF localy saved at: ${filePath}`);
         }
         else{
             throw new Error("plateforme andoid ou ios");

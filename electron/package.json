@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gestion-tournoi": "file:../gestion-tournoi"
+    "gestion-tournoi": "file:../gestion-tournoi",
+    "path-browserify": "^1.0.1"
   }
 }

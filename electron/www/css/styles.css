@@ -1,3 +1,15 @@
+/* Thème - Couleurs principales */
+:root {
+  --bg-color: #ffffff; /* Fond principal */
+  --surface-color: #1E1E1E; /* Couleur des surfaces comme les cartes ou inputs */
+  --primary-color: #BB86FC; /* Couleur principale pour les accents */
+  --secondary-color: #03DAC6; /* Couleur secondaire pour les accents */
+  --text-color: #000000; /* Couleur du texte principal */
+  --text-secondary-color: #000000; /* Texte secondaire */
+  --border-color: #333333; /* Bordure subtile */
+  --error-color: #CF6679; /* Couleur pour les erreurs */
+}
+
 body {
     font-family: Arial, sans-serif;
 }
@@ -6,16 +18,14 @@ body {
     display: flex; /* Utilise flexbox pour les colonnes */
     justify-content: space-between; /* Espace entre les colonnes */
     padding: 10px; /* Espacement intérieur */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre pour un effet de profondeur */
 }
 
 /* Style de base pour les cartes */
 .card {
-border: 1px solid #ddd;
+border: none;
 border-radius: 8px;
 padding: 10px;
 margin: 10px;
-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
 justify-content: space-between;
 align-items: center;
 }
@@ -49,10 +59,10 @@ display:none;
 /* Stylisez le label pour ressembler à un bouton */
 .checkbox label {
 padding: 10px 20px;
-border: 2px solid #007bff;
+border: 2px solid var(--border-color);
 border-radius: 5px;
-background-color: #fff;
-color: #007bff;
+background-color: var(--bg-color);
+color: var(--text-color);
 cursor: pointer;
 transition: all 0.3s;
 display: flex;
@@ -61,14 +71,14 @@ height: 40px; /* Hauteur en pixels */
 
 /* Style du label quand la case est cochée */
 .checkbox input[type="checkbox"]:checked + label {
-background-color: #007bff;
-color: #fff;
+background-color: var(--primary-color);
+color: var(--text-color);
 }
 
 /* Effet de survol */
 .checkbox label:hover {
-background-color: #00fffb;
-color: #fff;
+background-color: var(--secondary-color);
+color: var(--text-color);
 }
 
 #personList {

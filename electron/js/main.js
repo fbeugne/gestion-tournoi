@@ -1,12 +1,14 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('node:path')
+const os = require('node:os');
 const {loadConfig, getConfig} = require('gestion-tournoi');
 
 const { getPlayers, setPlayerSelection, updatePlayers } = require('gestion-tournoi')
 const { getNbPlayersPerTeam, setNbPlayersPerTeam } = require('gestion-tournoi')
 const { getNbRounds, setNbRounds } = require('gestion-tournoi')
 
-const { effectuerTirage } = require('gestion-tournoi')
+const { effectuerTirage } = require('gestion-tournoi');
+const { loadTirage, getTirage } = require('gestion-tournoi');
 
 
 let mainWindow;
@@ -31,6 +33,13 @@ function displayConfigWindow() {
 
 function displaySelectPlayers() {
     mainWindow.loadFile('../www/01-selection-joueurs.html');
+}
+
+function genererEquipes() {
+    let pdfFilePath = path.join(os.tmpdir(),"tirage.pdf");
+    effectuerTirage(pdfFilePath);
+    mainWindow.loadFile(pdfFilePath);
+    mainWindow.webContents.send('saveApp');
 }
 
 app.on('ready', () => {
@@ -65,8 +74,18 @@ app.on('ready', () => {
     ipcMain.on('setPlayerSelection', (_event, player, selected) => {
         setPlayerSelection(player, selected);
     });
-    ipcMain.on('effectuerTirage', (_event, pdfFilePath) => {
+    ipcMain.on('effectuerTirage', (event) => {
+        let pdfFilePath = path.join(os.tmpdir(),"tirage.pdf");
+        event.returnValue = pdfFilePath;
         effectuerTirage(pdfFilePath);
+    });
+
+    ipcMain.on('loadTirage', (_event, jsonData) => {
+        loadTirage(jsonData);
+    });
+
+    ipcMain.on('getTirage', (event) => {
+        event.returnValue = getTirage();
     });
 
     createMainWindow();
@@ -81,8 +100,11 @@ app.on('ready', () => {
             type: 'separator'
         },
         {
-            label: 'Sélectionner',
-            click: displaySelectPlayers // Ouvrir la fenêtre de selection
+            label: 'Tirage',
+            submenu: [
+                { label: 'Sélectionner', click: displaySelectPlayers },
+                { label: 'Afficher le tirage', click: genererEquipes }
+              ]
         },
         {
             type: 'separator'

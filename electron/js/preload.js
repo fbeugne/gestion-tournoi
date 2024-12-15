@@ -37,7 +37,16 @@ contextBridge.exposeInMainWorld('tournoi', {
     tirage: {
         effectuerTirage() {
             return ipcRenderer.sendSync('effectuerTirage');
+        },
+        getTirage() {
+            return ipcRenderer.sendSync('getTirage');
+        },
+        loadTirage(jsonData) {
+            ipcRenderer.send('loadTirage', jsonData);
         }
     }
 });
 
+ipcRenderer.on('saveApp', (_event) => {
+window.localStorage.setItem('configTournoi', window.tournoi.config.getConfig());
+});

@@ -1,13 +1,6 @@
 let homeTotalSelected = 0; // Compteur pour les joueurs sélectionnés
-let pdfFilePath;
+let pdfFilePath = undefined;
 
-const saveSelect = () => {
-    window.localStorage.setItem('configTournoi', window.tournoi.config.getConfig());
-}
-
-const initSelectButton = () => {
-    document.getElementById("genererEquipes").addEventListener('click', genererEquipes);
-}
 
 const updatePlayerLists = () => {
 
@@ -15,7 +8,7 @@ const updatePlayerLists = () => {
     const dataPlayers = window.tournoi.config.getPlayers();
     const homePlayersList = document.getElementById('homePlayers');
 
-    const genererEquipesButton = document.getElementById('genererEquipes');
+    const nbSelectLabel = document.getElementById('nb_select');
 
     // Vider les listes
     homePlayersList.innerHTML = '';
@@ -40,7 +33,7 @@ const updatePlayerLists = () => {
                 homeTotalSelected--;
             }
             window.tournoi.player.setPlayerSelection(this.id, this.checked);
-            genererEquipesButton.textContent = `Sélectionner ${homeTotalSelected} joueurs sur ${dataPlayers.length} `; // Met à jour l'affichage
+            nbSelectLabel.textContent = `Sélectionner ${homeTotalSelected} joueurs sur ${dataPlayers.length} `; // Met à jour l'affichage
           });
 
         const label = document.createElement('label');
@@ -63,26 +56,10 @@ const updatePlayerLists = () => {
         window.tournoi.player.setPlayerSelection(checkbox.id, checkbox.checked);
 
     });
-    genererEquipesButton.textContent = `Sélectionner ${homeTotalSelected} joueurs sur ${dataPlayers.length} `; // Met à jour l'affichage
+    nbSelectLabel.textContent = `Sélectionner ${homeTotalSelected} joueurs sur ${dataPlayers.length} `; // Met à jour l'affichage
 
-}
-
-const genererEquipes = () => {
-
-    const path = require('node:path');
-    const os = require('node:os');
-
-    pdfFilePath = path.join(os.tmpdir(),"tirage.pdf");
-    window.tournoi.tirage.effectuerTirage(pdfFilePath);
-    saveSelect();
-    afficherTirage();
-}
-
-const afficherTirage = () => {
-    window.open(pdfFilePath, "Tirage");
 }
 
 const initPlayersRenderer = () => {
     updatePlayerLists();
-    initSelectButton();
 }
