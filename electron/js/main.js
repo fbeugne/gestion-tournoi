@@ -28,11 +28,11 @@ function createMainWindow() {
 }
 
 function displayConfigWindow() {
-    mainWindow.loadFile('../www/00-config.html');
+    mainWindow.loadFile(path.join(__dirname, "..", "www", "00-config.html"));
 }
 
 function displaySelectPlayers() {
-    mainWindow.loadFile('../www/01-selection-joueurs.html');
+    mainWindow.loadFile(path.join(__dirname, "..", "www", "01-selection-joueurs.html"));
 }
 
 function genererEquipes() {
@@ -99,20 +99,21 @@ app.on('ready', () => {
         {
             type: 'separator'
         },
-        {
-            label: 'Tirage',
-            submenu: [
-                { label: 'Sélectionner', click: displaySelectPlayers },
-                { label: 'Afficher le tirage', click: genererEquipes }
-              ]
+        { 
+            label: 'Sélectionner', 
+            click: displaySelectPlayers 
+        },
+        { 
+            label: 'Afficher le tirage', 
+            click: genererEquipes 
         },
         {
             type: 'separator'
         },
-        {
-            label: 'Debug',
-            role: 'toggleDevTools'
-        }
+        //{
+        //    label: 'Debug',
+        //    role: 'toggleDevTools'
+        //}
     ];
 
     const menu = Menu.buildFromTemplate(template);
