@@ -3,6 +3,7 @@ const { getNbRounds } = require('./config-tournoi.js');
 const { getSelectedPlayers } = require('./config-tournoi.js');
 const { isTirageObsolete } = require('./config-tournoi.js');
 const { exportPdfTirage } = require('./tirage-pdf.js');
+const { exportPdfTirageDebut, exportPdfTirageSuite, exportPdfTirageFin } = require('./tirage-pdf.js');
 
 let parties = []; // dictionnaire {id, pairs, resultat}
 
@@ -175,8 +176,7 @@ function arePairsValid(pairs) {
 function isLastPairValid(pairs) {
 
     /* On verifie que dans le dernier groupe, qui est le groupe qui contient le reliquat des joueurs
-     * Aucun joueur ne s'est déja trouvé dans un le dernier groupe
-     * si d'autre n'y sont pas encore
+     * Aucun joueur ne s'est déja trouvé dans un des dernier groupe
      */
     const lastPlayers = pairs.slice(-1).flat(2);
     const firstGroupLength = pairs[0].flat(2).length;
@@ -309,9 +309,107 @@ function getTirage()
     return jsonData;
 }
 
+function effectuerTirageMultiple(pdfFilePath)
+{
+    const nbPlayersPerTeam = getNbPlayersPerTeam();
+    const nb_parties = getNbRounds();
+
+    exportPdfTirageDebut();
+    /* maximum 16 planches */
+    const maxPlayers = 16 * nbPlayersPerTeam * 2;
+    let allPlayers = Array.from({ length: maxPlayers });
+    for (let i=0; i < maxPlayers; i++){
+        allPlayers[i] = i+1;
+    }
+
+    for(let nbPlayers = nbPlayersPerTeam*4; nbPlayers <= maxPlayers; nbPlayers+=1){
+        let nb_retry = 1000;
+
+        parties = []; // reset des parties
+
+        let num_tirage = 1;
+        while ((parties.length < nb_parties) && (nb_retry > 0)){
+            nb_retry --;
+
+            listPlayers = shuffleArray(allPlayers.slice(0, nbPlayers));
+
+            /* Generation de partie avec des groups de nb joueurs par équipes */
+            let groups = generateUniqueGroups(nbPlayers, nbPlayersPerTeam * 2, nb_parties - parties.length);
+        
+            for (let i = 0; i < groups.length; i += 1) {
+                let pairs = [];
+                let groups_partie = groups[i];
+                for (let j = 0; j < groups_partie.length; j += 1) {
+                    let team1 = groups_partie[j].slice(0, groups_partie[j].length / 2).map((x) => listPlayers[x]);
+                    let team2 = groups_partie[j].slice((groups_partie[j].length / 2),groups_partie[j].length).map((x) => listPlayers[x]);
+
+                    const pair = [team1.sort((a, b) => a - b), team2.sort((a, b) => a - b)];
+
+                    pairs.push(pair);
+                }
+
+                /* il se peut que plusieurs tirage soit necessaire pour former les parties
+                * a minima on reverifie que 2 mêmes équipes n'ont pas déjà été formé  
+                */
+                let pairsValid = false;
+                if(nbPlayersPerTeam > 1)
+                {
+                    pairsValid = arePairsValid(pairs);
+                }
+                else {
+                    pairsValid = true;
+                }
+                
+                /* vérification que dans la derniere pair, un joueur ne s'y retrouve pas 2 fois
+                * pour éviter qu'il se retrouve dans un groupe de moindre taille plusier fois
+                * dans la partie
+                * Une exception pour un tirage de 11 joueurs en 2 contre 2
+                * Une exception pour un tirage de 16 joueurs en 3 contre 3
+                * Une exception pour un tirage de 17 joueurs en 3 contre 3
+                */
+                if (    !(nbPlayers == 11 && nbPlayersPerTeam == 2)
+                    &&  !(nbPlayers == 16 && nbPlayersPerTeam == 3)
+                    &&  !(nbPlayers == 17 && nbPlayersPerTeam == 3)
+                    &&  (pairsValid == true)) {
+                    pairsValid = isLastPairValid(pairs);    
+                }
+
+                if (pairsValid == true){
+                    parties.push({
+                        id: parties.length,
+                        pairs: pairs,
+                        num_tirage: num_tirage,
+                        resultat: null
+                    });
+                }
+                else {
+                    /* Dans le cas d'une équipe formée d'un élément il faut recommancer tout 
+                    * le tirage s'il y a une erreur .
+                    * Reset des parties et des groupes pour recommencer.
+                    */
+                    if (nbPlayersPerTeam == 1) {
+                        parties = [];
+                        groups = [];
+                    }
+                }
+            }
+            num_tirage++;
+        }
+
+        /* si toutes les parties ont été rélaisés avec succes on ajoute les partie au document 
+         * certaines configuration de partie peuvent etre infaisable si le nombre de joueur est trop faible
+         */
+        if (parties.length == nb_parties){
+            exportPdfTirageSuite(parties, nbPlayers);
+        }
+    }
+
+    exportPdfTirageFin(pdfFilePath);
+}
 
 module.exports = {
     effectuerTirage,
     getTirage,
-    loadTirage
+    loadTirage,
+    effectuerTirageMultiple
 }
