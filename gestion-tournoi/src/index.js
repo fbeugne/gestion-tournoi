@@ -11,6 +11,7 @@ const {getSelectedPlayers} = require('./config-tournoi');
 const {effectuerTirage} = require('./tirage');
 const {getTirage} = require('./tirage');
 const {loadTirage} = require('./tirage');
+const {effectuerTirageMultiple} = require('./tirage');
 
 
 module.exports = {
@@ -26,5 +27,6 @@ module.exports = {
     getSelectedPlayers,
     effectuerTirage,
     getTirage,
-    loadTirage
+    loadTirage,
+    effectuerTirageMultiple
 }

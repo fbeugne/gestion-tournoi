@@ -85,27 +85,45 @@ function printScore(doc, parties) {
     });
 }
 
-function printPartie(doc, partie){
+function printPartie(doc, partie, nbPlayers = undefined, withScore = true){
 
         // Définir les en-têtes du tableau
-        const headers = [`Partie ${partie.id + 1}`, "", "", "    ", "    "];
+        const headers = [];
+        if (withScore){
+            if (nbPlayers !== undefined){
+                headers.push([`${nbPlayers} joueurs`, "", "", "", ""]);
+            }
+            headers.push([`Partie ${partie.id + 1}`, "", "", "", ""]);
+        }
+        else{
+            if (nbPlayers !== undefined){
+                headers.push([`${nbPlayers} joueurs`, "", ""]);
+            }
+            headers.push([`Partie ${partie.id + 1}`, "", ""]);
+        }
 
         // Définir les données du tableau (5 lignes d'exemple)
         const data = [];
 
         let planche = 1;
         partie.pairs.forEach(pair => {
-            data.push([planche, pair[0].join('-'), pair[1].join('-'), "    ", "    "]);
+            if (withScore) {
+                data.push([planche, pair[0].join(' - '), pair[1].join(' - '), "   ", "   "]);
+            }
+            else {
+                data.push([planche, pair[0].join(' - '), pair[1].join(' - ')]);
+            }
             planche += 1;
         });
 
         // Ajouter le tableau au document PDF
         doc.autoTable({
             startY: 20,
-            head: [headers],
+            head: headers,
             body: data,
             theme: 'grid',
-            styles: { fontSize: 16, minCellHeight: 12, halign: 'center', valign: 'middle' },
+            headStyles: { fontSize: 14, minCellHeight: 12, halign: 'center', valign: 'middle' },
+            bodyStyles: { fontSize: 28, minCellHeight: 12, halign: 'center', valign: 'middle' },
             didParseCell : (data) => {
                 if ((data.section === 'body') && (data.column.index === 0)) {
                     data.cell.styles.fontStyle = 'bold';
@@ -175,6 +193,33 @@ const exportPdfTirage = async (parties, filePath) => {
     await saveDoc(doc, filePath);
 }
 
+var docTirage = undefined;
+var firstPage = false;
+const exportPdfTirageDebut = () => {
+    docTirage = new jsPDF();
+    firstPage = true;
+}
+
+const exportPdfTirageSuite = (parties, nbJoueurs = undefined) => {
+    parties.forEach(partie => {
+        if (firstPage == false){
+            docTirage.addPage("", "portrait");
+        }
+        else {
+            firstPage = false;
+        }
+        printPartie(docTirage, partie, nbJoueurs, withScore = false);
+    });
+}
+
+const exportPdfTirageFin = async (filePath) => {
+    await saveDoc(docTirage, filePath);
+}
+
 module.exports = {
-    exportPdfTirage
+    exportPdfTirage,
+    printPartie,
+    exportPdfTirageDebut,
+    exportPdfTirageSuite,
+    exportPdfTirageFin
 }
