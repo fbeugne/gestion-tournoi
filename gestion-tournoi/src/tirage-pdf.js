@@ -9,26 +9,15 @@ const { getSelectedPlayers } = require('./config-tournoi.js');
 function printPlayer(doc) {
 
     // Définir les en-têtes du tableau
-    const headers = ["N°", "Joueur", "", "N°", "Joueur"];
+    const headers = ["N°", "Joueur"];
 
     const data = [];
     const selectedPlayersPerIdMatch = getSelectedPlayers().sort((a, b) => a.id_match - b.id_match);
 
     /* 1ere moitier de la liste */ 
-    const selectedPlayers1stCloumn = selectedPlayersPerIdMatch.slice(0, (selectedPlayersPerIdMatch.length + 1) / 2);
-    selectedPlayers1stCloumn.forEach(selectedPlayer => {
-        data.push([selectedPlayer.id_match, selectedPlayer.name, "", "", ""]);
+    selectedPlayersPerIdMatch.forEach(selectedPlayer => {
+        data.push([selectedPlayer.id_match, selectedPlayer.name]);
     });
-
-    /* 2eme moitier de la liste */
-    const selectedPlayers2ndCloumn = selectedPlayersPerIdMatch.slice((selectedPlayersPerIdMatch.length + 1) / 2, selectedPlayersPerIdMatch.length);
-    let indexData = 0;
-    selectedPlayers2ndCloumn.forEach(selectedPlayer => {
-        data[indexData][3] = selectedPlayer.id_match;
-        data[indexData][4] = selectedPlayer.name;
-        indexData++;
-    });
-
 
     // Ajouter le tableau au document PDF
     doc.autoTable({
@@ -40,7 +29,7 @@ function printPlayer(doc) {
         theme: 'striped',
         styles: { fontSize: 16 },
         didParseCell : (data) => {
-            if (data.column.index === 2) {
+            if (data.column.index === 0) {
                 data.cell.styles.fillColor = [255, 255, 255];
             }
         },
@@ -85,7 +74,7 @@ function printScore(doc, parties) {
     });
 }
 
-function printPartie(doc, partie, nbPlayers = undefined, withScore = true){
+function printPartie(doc, partie, nbPlayers = undefined, withScore = false){
 
         // Définir les en-têtes du tableau
         const headers = [];
